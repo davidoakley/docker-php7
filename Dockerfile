@@ -30,7 +30,6 @@ EXPOSE 9000
 # Clean APK cache
 RUN rm -rf /var/cache/apk/*
 RUN apk del autoconf build-base
-RUN apk cache clean
 
 # Clear out old default site content
 RUN rm -rf /var/www/html/*
