@@ -23,7 +23,7 @@ RUN curl -fsSL 'https://github.com/Yelp/dumb-init/releases/download/v1.1.1/dumb-
 RUN chmod +x /usr/local/bin/dumb-init
 
 COPY php.ini      /usr/local/etc/php/php.ini
-COPY php-fpm.ini  /usr/local/etc/php-fpm.ini
+COPY php-fpm.conf /usr/local/etc/php-fpm.conf
 
 EXPOSE 9000
 
