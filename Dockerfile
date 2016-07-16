@@ -31,8 +31,7 @@ RUN apk del autoconf build-base
 # Clear out old default site content
 RUN rm -rf /var/www/html/*
 
-RUN mkdir -p /var/www/html/web
-RUN mkdir -p /var/www/html/include
+RUN mkdir -p /opt/sites
 
 
 CMD ["dumb-init", "php-fpm"]
