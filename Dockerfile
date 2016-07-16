@@ -15,8 +15,8 @@ RUN curl -fsSL 'https://github.com/websupport-sk/pecl-memcache/archive/NON_BLOCK
     ) \
     && rm -r pecl-memcache-NON_BLOCKING_IO_php7
 
-RUN docker-php-ext-install mysqli mcrypt && \
-    docker-php-ext-enable mysqli mcrypt memcache
+RUN docker-php-ext-install mysqli mcrypt opcache && \
+    docker-php-ext-enable mysqli mcrypt opcache memcache
 
 # https://github.com/Yelp/dumb-init
 RUN curl -fsSL 'https://github.com/Yelp/dumb-init/releases/download/v1.1.1/dumb-init_1.1.1_amd64' -o /usr/local/bin/dumb-init
