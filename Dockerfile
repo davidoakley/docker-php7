@@ -28,4 +28,7 @@ EXPOSE 9000
 RUN rm -rf /var/cache/apk/*
 RUN apk del autoconf build-base
 
+# Clear out old default site content
+RUN rm -rf /var/www/html/*
+
 CMD ["dumb-init", "php-fpm"]
