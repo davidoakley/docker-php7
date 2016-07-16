@@ -22,6 +22,9 @@ RUN docker-php-ext-install mysqli mcrypt && \
 RUN curl -fsSL 'https://github.com/Yelp/dumb-init/releases/download/v1.1.1/dumb-init_1.1.1_amd64' -o /usr/local/bin/dumb-init
 RUN chmod +x /usr/local/bin/dumb-init
 
+COPY php.ini      /usr/local/etc/php/php.ini
+COPY php-fpm.ini  /usr/local/etc/php-fpm.ini
+
 EXPOSE 9000
 
 # Clean APK cache
