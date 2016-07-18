@@ -30,6 +30,7 @@ RUN curl -fsSL 'http://download.newrelic.com/php_agent/release/newrelic-php5-6.4
     && rm newrelic.tar.gz \
     && cp newrelic-php5-6.4.0.163-linux-musl/agent/x64/newrelic-20151012.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012/newrelic.so \
     && cp newrelic-php5-6.4.0.163-linux-musl/daemon/newrelic-daemon.x64 /usr/bin/newrelic-daemon
+    && mkdir -p /var/log/newrelic
 
 COPY php.ini      /usr/local/etc/php/php.ini
 COPY php.ini      /usr/local/etc/php/php.ini
