@@ -28,6 +28,7 @@ ENV NR_INSTALL_KEY=5ab6d8b449801d72da4de3bcf1d3864ba3212299
 RUN curl -fsSL 'http://download.newrelic.com/php_agent/release/newrelic-php5-6.4.0.163-linux-musl.tar.gz' -o newrelic.tar.gz \
     && tar xvzf newrelic.tar.gz \
     && rm newrelic.tar.gz \
+    && cp newrelic-php5-6.4.0.163-linux-musl/agent/x64/newrelic-20151012.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012/newrelic.so \
     && ( \
             cd newrelic-php5* \
          && ./newrelic-install install \
