@@ -1,7 +1,9 @@
 FROM php:7-fpm-alpine
 
 # Install dependencies
-RUN apk add --no-cache bash curl libmemcached-dev autoconf build-base zlib-dev libmcrypt-dev
+RUN apk add --no-cache bash curl libmemcached-dev autoconf build-base zlib-dev libmcrypt-dev geoip-dev subversion
+
+RUN docker-php-ext-install mysqli mcrypt opcache
 
 RUN curl -fsSL 'https://github.com/websupport-sk/pecl-memcache/archive/NON_BLOCKING_IO_php7.zip' -o memcache.zip \
     && unzip memcache.zip \
@@ -10,13 +12,22 @@ RUN curl -fsSL 'https://github.com/websupport-sk/pecl-memcache/archive/NON_BLOCK
         cd pecl-memcache-NON_BLOCKING_IO_php7 \
         && phpize \
         && ./configure --enable-memcache \
-        && make -j$(nproc) \
+        && make \
         && make install \
     ) \
-    && rm -r pecl-memcache-NON_BLOCKING_IO_php7
+    && rm -r pecl-memcache-NON_BLOCKING_IO_php7 \
+    && docker-php-ext-enable memcache
 
-RUN docker-php-ext-install mysqli mcrypt opcache && \
-    docker-php-ext-enable mysqli mcrypt opcache memcache
+RUN svn export http://svn.php.net/repository/pecl/geoip/trunk/ geoip \
+    && ( \
+        cd geoip \
+        && phpize \
+        && ./configure \
+        && make \
+        && make install \
+    ) \
+    && rm -r geoip \
+    && docker-php-ext-enable geoip
 
 # https://github.com/Yelp/dumb-init
 RUN curl -fsSL 'https://github.com/Yelp/dumb-init/releases/download/v1.1.1/dumb-init_1.1.1_amd64' -o /usr/local/bin/dumb-init
@@ -40,7 +51,7 @@ EXPOSE 9000
 
 # Clean APK cache
 RUN rm -rf /var/cache/apk/*
-RUN apk del autoconf build-base
+RUN apk del autoconf build-base subversion
 
 # Clear out old default site content
 RUN rm -rf /var/www/html/*
