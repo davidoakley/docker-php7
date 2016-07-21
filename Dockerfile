@@ -18,7 +18,7 @@ RUN curl -fsSL 'https://github.com/websupport-sk/pecl-memcache/archive/NON_BLOCK
     && rm -r pecl-memcache-NON_BLOCKING_IO_php7 \
     && docker-php-ext-enable memcache
 
-RUN svn export http://svn.php.net/repository/pecl/geoip/trunk/ geoip \
+RUN svn export -r 339679 http://svn.php.net/repository/pecl/geoip/trunk/ geoip \
     && ( \
         cd geoip \
         && phpize \
@@ -43,9 +43,9 @@ RUN curl -fsSL 'http://download.newrelic.com/php_agent/release/newrelic-php5-6.4
     && cp newrelic-php5-6.4.0.163-linux-musl/daemon/newrelic-daemon.x64 /usr/bin/newrelic-daemon \
     && mkdir -p /var/log/newrelic
 
-COPY php.ini      /usr/local/etc/php/php.ini
-COPY php.ini      /usr/local/etc/php/php.ini
-COPY newrelic.ini 	/usr/local/etc/php/conf.d/
+COPY php.ini      /usr/local/etc/php/
+COPY newrelic.ini /usr/local/etc/php/conf.d/
+COPY docker.conf  /usr/local/etc/php-fpm.d/
 
 EXPOSE 9000
 
