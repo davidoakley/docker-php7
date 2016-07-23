@@ -3,7 +3,9 @@ FROM php:7-fpm-alpine
 # Install dependencies
 RUN apk add --no-cache bash curl libmemcached-dev autoconf build-base zlib-dev libmcrypt-dev geoip-dev subversion
 
-RUN docker-php-ext-install mysqli mcrypt opcache
+RUN docker-php-ext-install mysqli mcrypt opcache \
+    && pecl install apcu \
+    && docker-php-ext-enable apcu
 
 RUN curl -fsSL 'https://github.com/websupport-sk/pecl-memcache/archive/NON_BLOCKING_IO_php7.zip' -o memcache.zip \
     && unzip memcache.zip \
